@@ -1,4 +1,4 @@
 component: backend
 log_file: /var/log/messages
-
+is_rsyslog_needed: yes
 
