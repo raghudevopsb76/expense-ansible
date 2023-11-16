@@ -1,0 +1,4 @@
+component: backend
+log_file: /var/log/messages
+
+
