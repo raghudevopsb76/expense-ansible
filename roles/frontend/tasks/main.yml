@@ -34,4 +34,4 @@
 
 - name: Import Grafana - Dashboard Creation
   ansible.builtin.import_role:
-    name: prometheus
+    name: grafana
