@@ -14,3 +14,14 @@
     state: restarted
     enabled: yes
 
+- name: Copy Alert Manager Config
+  ansible.builtin.template:
+    src: alertmanager.yml
+    dest: /opt/alertmanager/alertmanager.yml
+
+- name: Restart Alert Manager
+  ansible.builtin.systemd:
+    name: alertmanager
+    state: restarted
+    enabled: yes
+
