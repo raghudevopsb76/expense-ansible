@@ -1,39 +1,35 @@
-#- name: Copy Prometheus Configuration
-#  ansible.builtin.template:
-#    src: prometheus.yml
-#    dest: /opt/prometheus/prometheus.yml
-#
-#- name: Copy Alert Rules
-#  ansible.builtin.template:
-#    src: common.yml
-#    dest: /opt/prometheus/alert-rules/common.yml
-#
-#- name: Reload Prometheus
-#  ansible.builtin.shell: kill -1 $(ps -ef | grep /opt/prometheus/prometheus | grep -v grep  | awk '{print $2}')
-#
-#- name: Copy Alert Manager Config
-#  ansible.builtin.template:
-#    src: alertmanager.yml
-#    dest: /opt/alertmanager/alertmanager.yml
-#
-##- name: Download All the Objects from S3 Bucket Having Alert Files
-##  amazon.aws.s3_object:
-##    bucket: d76-prometheus-alert-rules
-##    mode: get
-##    object: "*"
-##    dest: /tmp/
-#
-#- name: Reload AlertManager
-#  ansible.builtin.shell: kill -1 $(ps -ef | grep /opt/alertmanager/alertmanager | grep -v grep  | awk '{print $2}')
-#
-#
+- name: Copy Prometheus Configuration
+  ansible.builtin.template:
+    src: prometheus.yml
+    dest: /opt/prometheus/prometheus.yml
 
-- name: List keys all options
+- name: Copy Alert Rules
+  ansible.builtin.template:
+    src: common.yml
+    dest: /opt/prometheus/alert-rules/common.yml
+
+- name: List All files in Bucket
   amazon.aws.s3_object:
     bucket: d76-prometheus-alert-rules
     mode: list
   register: out
 
-- name: Pritn
-  debug:
-    msg: "{{out}}"
+- name: Download All the Objects from S3 Bucket Having Alert Files
+  amazon.aws.s3_object:
+    bucket: d76-prometheus-alert-rules
+    mode: get
+    object: "{{item}}"
+    dest: /opt/prometheus/alert-rules/
+  loop: "{{out.s3_keys}}"
+
+- name: Reload Prometheus
+  ansible.builtin.shell: kill -1 $(ps -ef | grep /opt/prometheus/prometheus | grep -v grep  | awk '{print $2}')
+
+- name: Copy Alert Manager Config
+  ansible.builtin.template:
+    src: alertmanager.yml
+    dest: /opt/alertmanager/alertmanager.yml
+
+- name: Reload AlertManager
+  ansible.builtin.shell: kill -1 $(ps -ef | grep /opt/alertmanager/alertmanager | grep -v grep  | awk '{print $2}')
+
