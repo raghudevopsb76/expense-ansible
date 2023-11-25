@@ -1,43 +1,46 @@
-- name: Installing Nginx
-  ansible.builtin.dnf:
-    name: nginx
-    state: present
+#- name: Installing Nginx
+#  ansible.builtin.dnf:
+#    name: nginx
+#    state: present
+#
+#- name: Copy Expense Config File
+#  ansible.builtin.template:
+#    src: expense.conf
+#    dest: /etc/nginx/default.d/expense.conf
+#
+#- name: Import Common Role - App Pre-requisites
+#  ansible.builtin.import_role:
+#    name: common
+#    tasks_from: app-prereq
+#  vars:
+#    app_dir: /usr/share/nginx/html
+#    component: frontend
+#
+#- name: Start nginx Service
+#  ansible.builtin.systemd:
+#    name: nginx
+#    state: restarted
+#    enabled: yes
+#
+#- name: Import ELK Role - Filebeat
+#  ansible.builtin.import_role:
+#    name: elk
+#    tasks_from: filebeat
+#
+#- name: Import Prometheus - Node Exporter
+#  ansible.builtin.import_role:
+#    name: prometheus
+#    tasks_from: node-exporter
+#
+#- name: Import Grafana - Dashboard Creation
+#  ansible.builtin.import_role:
+#    name: grafana
+#
+#- name: Import Prometheus Role - Alert Rules Update
+#  ansible.builtin.import_role:
+#    name: prometheus
+#    tasks_from: alert-rules-update
+#
 
-- name: Copy Expense Config File
-  ansible.builtin.template:
-    src: expense.conf
-    dest: /etc/nginx/default.d/expense.conf
-
-- name: Import Common Role - App Pre-requisites
-  ansible.builtin.import_role:
-    name: common
-    tasks_from: app-prereq
-  vars:
-    app_dir: /usr/share/nginx/html
-    component: frontend
-
-- name: Start nginx Service
-  ansible.builtin.systemd:
-    name: nginx
-    state: restarted
-    enabled: yes
-
-- name: Import ELK Role - Filebeat
-  ansible.builtin.import_role:
-    name: elk
-    tasks_from: filebeat
-
-- name: Import Prometheus - Node Exporter
-  ansible.builtin.import_role:
-    name: prometheus
-    tasks_from: node-exporter
-
-- name: Import Grafana - Dashboard Creation
-  ansible.builtin.import_role:
-    name: grafana
-
-- name: Import Prometheus Role - Alert Rules Update
-  ansible.builtin.import_role:
-    name: prometheus
-    tasks_from: alert-rules-update
-
+- name: Install New Relic Agent
+  ansible.builtin.shell: curl -Ls https://download.newrelic.com/install/newrelic-cli/scripts/install.sh | bash && sudo NEW_RELIC_API_KEY=NRAK-D6K56B1ACC02CECBTAKILVUNW50 NEW_RELIC_ACCOUNT_ID=4094457 /usr/local/bin/newrelic install -y -n infrastructure-agent-installer
