@@ -51,3 +51,10 @@
     name: elk
     tasks_from: filebeat
 
+- name: Install New Relic NodeJS Library
+  ansible.builtin.shell: npm install newrelic --save
+  args:
+    chdir: /app
+
+
+
