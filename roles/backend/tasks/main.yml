@@ -50,17 +50,17 @@
 - name: Load Schema
   ansible.builtin.shell: mysql -h {{ lookup('amazon.aws.aws_ssm', 'backend.{{env}}.DB_HOST', region='us-east-1' ) }} -u{{ lookup('amazon.aws.aws_ssm', 'backend.{{env}}.DB_USER', region='us-east-1' ) }} -p{{ lookup('amazon.aws.aws_ssm', 'backend.{{env}}.DB_PASS', region='us-east-1' ) }} < /app/schema/backend.sql
 
+- name: Import ELK Role - Filebeat
+  ansible.builtin.import_role:
+    name: elk
+    tasks_from: filebeat
+
 - name: Start Backend Service
   ansible.builtin.systemd:
     name: backend
     state: restarted
     enabled: yes
     daemon-reload: yes
-
-- name: Import ELK Role - Filebeat
-  ansible.builtin.import_role:
-    name: elk
-    tasks_from: filebeat
 
 - name: Import Prometheus - Node Exporter
   ansible.builtin.import_role:
