@@ -15,3 +15,5 @@
     src: https://expense-artifacts.s3.amazonaws.com/{{component}}.zip
     dest: "{{ app_dir }}"
     remote_src: yes
+
+#http://artifactory.rdevopsb72.online:8081/artifactory/expense-backend/expense-backend-1.0.0.zip
