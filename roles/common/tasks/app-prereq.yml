@@ -18,7 +18,7 @@
 
 - name: Download and extract app content
   ansible.builtin.unarchive:
-    src: http://{{username}:{{password}}@artifactory.rdevopsb72.online:8081/artifactory/{{project_name}}-{{component}}/{{project_name}}-{{component}}-{{version}}.zip
+    src: http://{{username}}:{{password}}@artifactory.rdevopsb72.online:8081/artifactory/{{project_name}}-{{component}}/{{project_name}}-{{component}}-{{version}}.zip
     dest: "{{ app_dir }}"
     remote_src: yes
   vars:
