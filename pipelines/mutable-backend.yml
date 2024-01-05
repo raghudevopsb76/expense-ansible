@@ -21,8 +21,8 @@ pipelines:
             tasks:
             - exec:
                 command: find
-                arguments:
-                  - .
+#                arguments:
+#                  - .
                 run_if: passed
 
     - qa:
