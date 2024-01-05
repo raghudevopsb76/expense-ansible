@@ -4,6 +4,8 @@ pipelines:
     group: defaultGroup
     environment_variables:
       APP_VERSION: ""
+      ENV: ""
+      COMPONENT: backend
     materials:
       deploy:
         git: https://github.com/raghudevopsb76/expense-ansible
@@ -23,6 +25,7 @@ pipelines:
                 command: bash
                 arguments:
                   - mutable.sh
+                  - "
                 run_if: passed
 
     - qa:
