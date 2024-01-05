@@ -5,7 +5,6 @@ pipelines:
     environment_variables:
       ENV: ""
       APP_VERSION: ""
-    parameters:
       COMPONENT: backend
     materials:
       deploy:
