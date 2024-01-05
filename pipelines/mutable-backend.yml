@@ -27,7 +27,6 @@ pipelines:
                 command: bash
                 arguments:
                   - mutable.sh
-                  - "
                 run_if: passed
 
     - qa:
