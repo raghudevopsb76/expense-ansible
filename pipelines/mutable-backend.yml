@@ -20,9 +20,9 @@ pipelines:
             timeout: 0
             tasks:
             - exec:
-                command: pwd
-#                arguments:
-#                  - mutable.sh
+                command: find
+                arguments:
+                  - .
                 run_if: passed
 
     - qa:
