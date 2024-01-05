@@ -4,8 +4,9 @@ pipelines:
     group: defaultGroup
     environment_variables:
       ENV: ""
-      COMPONENT: backend
       APP_VERSION: ""
+    parameters:
+      COMPONENT: backend
     materials:
       deploy:
         git: https://github.com/raghudevopsb76/expense-ansible
