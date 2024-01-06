@@ -1,4 +1,6 @@
 # Find the servers (Anisble Dynamic Inventory)
+
+exit 1
 aws ec2 describe-instances --filters "Name=tag:Name,Values=${ENV}-${COMPONENT}" --query 'Reservations[*].Instances[*].PrivateIpAddress' --output text >inv
 
 # Change the Parameter store having the app version.
