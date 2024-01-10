@@ -1,0 +1,8 @@
+- name: Expense Project Setup
+  hosts: all
+  become: yes
+  vars:
+    project_name: expense
+  roles:
+    - deployment
+
