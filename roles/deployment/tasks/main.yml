@@ -8,6 +8,12 @@
     name: common
     tasks_from: app-prereq
 
+- name: Copy Backend StartUP Script
+  ansible.builtin.template:
+    src: run.sh
+    dest: /app/run.sh
+  when: component == "backend"
+
 - name: Restart Service
   ansible.builtin.systemd:
     name: "{{ service_name }}"
