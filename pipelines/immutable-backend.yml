@@ -1,0 +1,82 @@
+format_version: 10
+pipelines:
+  ImmutableDeployment_Backend:
+    group: defaultGroup
+    environment_variables:
+      APP_VERSION: ""
+      COMPONENT: backend
+    materials:
+      deploy:
+        git: https://github.com/raghudevopsb76/expense-ansible
+        shallow_clone: true
+        auto_update: true
+        branch: main
+    stages:
+    - dev:
+        fetch_materials: true
+        keep_artifacts: false
+        clean_workspace: false
+        environment_variables:
+          ENV: dev
+        approval:
+            type: manual
+        jobs:
+          deploy:
+            timeout: 0
+            tasks:
+            - exec:
+                command: bash
+                arguments:
+                  - immutable.sh
+                run_if: passed
+
+    - qa:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+            type: manual
+        jobs:
+          deploy:
+            timeout: 0
+            tasks:
+            - exec:
+                command: echo
+                arguments:
+                  - "Deploying to QA Env"
+                run_if: passed
+
+    - uat:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        approval:
+            type: manual
+        jobs:
+          deploy:
+            timeout: 0
+            tasks:
+            - exec:
+                command: echo
+                arguments:
+                  - "Deploying to UAT Env"
+                run_if: passed
+
+    - prod:
+        fetch_materials: false
+        keep_artifacts: false
+        clean_workspace: false
+        environment_variables:
+          ENV: prod
+        approval:
+            type: manual
+        jobs:
+          deploy:
+            timeout: 0
+            tasks:
+            - exec:
+                command: bash
+                arguments:
+                  - immutable.sh
+                run_if: passed
+
